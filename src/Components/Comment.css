@@ -1,0 +1,282 @@
+
+.posted-comment-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fafafa;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.posted-comment-container:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+}
+
+.posted-comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Author's name styling */
+.posted-comment-author {
+    margin: 0;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Delete and Edit button styles */
+.delete-button,
+.edit-button {
+    background-color: #e57373;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    margin-left: 8px;
+}
+
+
+
+.posted-comment-text {
+    margin: 10px 0;
+    color: #666;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+/* Section for reply button and actions */
+.reply-section {
+    margin-top: 15px;
+}
+
+/* Reply button styles */
+.reply-button {
+    background-color: blue;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+
+
+
+.replies-list {
+    margin-top: 20px;
+}
+
+.reply-item {
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    max-width: 300px;
+    /* Limit the width for better readability */
+}
+
+/* Styling for reply author */
+.reply-item h4 {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Styling for reply text */
+.reply-item p {
+    margin: 8px 0;
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+/* Styling for reply buttons */
+.reply-item .delete-button {
+    background-color: #ff7043;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.3s ease;
+}
+
+
+
+/* Styling for the modal */
+.modal {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 25px;
+    width: 90%;
+    max-width: 550px;
+    margin: auto;
+    position: relative;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Overlay styling for the modal */
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* Styling for modal textareas */
+.modal-textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 1em;
+    line-height: 1.4;
+    resize: vertical;
+}
+
+/* Styling for modal buttons */
+.modal-button {
+    background-color: blue;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+.modal-new{
+    width: 100%;
+        height: 12px;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        font-size: 1em;
+        line-height: 1.4;
+        resize: vertical;
+}
+.comment1{
+    height: 15vh;
+}
+
+.input {
+    width: 90%;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top :25px;
+    
+}
+
+/* Outer container for centering */
+.outer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.input input {
+    padding: 6px;
+    border: 1px solid #e0e0e0;
+    /* Uncommented to add border */
+    border-radius: 6px;
+    /* Uncommented to add rounded corners */
+    margin-bottom: 15px;
+    font-size: 1em;
+    line-height: 1.4;
+    resize: vertical;
+    /* Uncommented to allow vertical resizing */
+    box-sizing: border-box;
+    /* Ensures padding and border are included in the total width and height */
+    width: 100%;
+    /* Ensures input takes full width of the parent container */
+}
+
+/* Styling for the comment box */
+.comment {
+    width: 100%;
+    max-width: 700px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Comment header */
+.comment h3 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #333;
+}
+
+/* Comment text */
+.comment p {
+    margin: 15px 0;
+    color: #666;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+/* Styling for buttons inside the comment box */
+.comment button {
+    width: 120px;
+    height: 40px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+}
+
+
+/* Layout for new comment section */
+.new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Styling for input fields inside new comment section */
+.in {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1em;
+    line-height: 1.6;
+}
