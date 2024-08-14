@@ -1,4 +1,4 @@
-
+/* Container for posted comments */
 .posted-comment-container {
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -7,13 +7,17 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+    position: relative;
+    /* Add relative positioning for absolute positioning of date and delete button */
 }
 
+/* Hover effect for posted comments */
 .posted-comment-container:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     transform: scale(1.02);
 }
 
+/* Header styling */
 .posted-comment-header {
     display: flex;
     justify-content: space-between;
@@ -29,10 +33,41 @@
     color: #333;
 }
 
-/* Delete and Edit button styles */
-.delete-button,
-.edit-button {
-    background-color: #e57373;
+/* Comment text styling */
+.posted-comment-text {
+    margin: 10px 0;
+    color: #666;
+    font-size: 1em;
+    line-height: 1.6;
+    /* text-align: center; */
+    /* Center text in the comment */
+}
+
+/* Date and delete button container */
+.date-delete-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    /* width: calc(100% - 40px); */
+    font-size: 0.9em;
+}
+
+/* Date styling */
+.posted-comment-date {
+    margin: 0;
+    color: #999;
+    font-size: 0.9em;
+}
+
+/* Button styles for delete and edit actions */
+.delete-button{
+    background-color: #2196F3;
+    /* Blue background */
+    
     color: #fff;
     border: none;
     padding: 8px 14px;
@@ -42,24 +77,35 @@
     transition: background-color 0.3s ease;
     margin-left: 8px;
 }
-
-
-
-.posted-comment-text {
-    margin: 10px 0;
-    color: #666;
-    font-size: 1em;
-    line-height: 1.6;
+.edit-button {
+    /* background-color: #2196F3; */
+    width: 2%;
+    height: 1px;
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background-color 0.3s ease;
+    margin-left: 4px;
+    font-color: blue;
+}
+.delete-button:hover,
+.edit-button:hover {
+    /* background-color: #1976D2; */
+    /* Darker blue for hover effect */
 }
 
-/* Section for reply button and actions */
+/* Reply section styling */
 .reply-section {
     margin-top: 15px;
 }
 
 /* Reply button styles */
 .reply-button {
-    background-color: blue;
+    background-color: #2196F3;
+    /* Blue background */
     color: #fff;
     border: none;
     padding: 10px 16px;
@@ -70,13 +116,21 @@
     margin-right: 10px;
 }
 
-
-
-
-.replies-list {
-    margin-top: 20px;
+.reply-button:hover {
+    background-color: #1976D2;
+    /* Darker blue for hover effect */
 }
 
+/* Replies list styling */
+.replies-list {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+    /* Light background for the reply section */
+}
+
+/* Styling for each reply item */
 .reply-item {
     margin: 15px 0;
     padding: 15px;
@@ -84,11 +138,13 @@
     border-radius: 8px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    max-width: 300px;
-    /* Limit the width for better readability */
+    max-width: 100%;
+    /* Make the width responsive */
+    width: 100%;
+    /* Ensure it takes full width of the parent container */
 }
 
-/* Styling for reply author */
+/* Reply author styling */
 .reply-item h4 {
     margin: 0;
     font-size: 1.2em;
@@ -96,51 +152,71 @@
     color: #333;
 }
 
-/* Styling for reply text */
+/* Reply text styling */
 .reply-item p {
     margin: 8px 0;
     color: #666;
     font-size: 0.95em;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-/* Styling for reply buttons */
-.reply-item .delete-button {
-    background-color: #ff7043;
+/* Button styles inside each reply */
+.reply-item button {
+    background-color: #2196F3;
+    /* Blue background for buttons */
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 6px 12px;
+    padding: 8px 14px;
     cursor: pointer;
     font-size: 0.85em;
     transition: background-color 0.3s ease;
+    margin-right: 8px;
+    /* Margin to separate buttons */
 }
 
-
-
-/* Styling for the modal */
-.modal {
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 25px;
-    width: 90%;
-    max-width: 550px;
-    margin: auto;
-    position: relative;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+/* Hover effects for reply buttons */
+.reply-item button:hover {
+    background-color: #1976D2;
+    /* Darker blue for hover effect */
 }
 
-/* Overlay styling for the modal */
-.modal-overlay {
-    background: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+/* Additional styling for reply editing area */
+.reply-item .reply-edit-area {
+    margin-top: 10px;
 }
 
-/* Styling for modal textareas */
+/* Styling for reply textareas inside the edit area */
+.reply-item .reply-edit-area textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.95em;
+    line-height: 1.4;
+    resize: vertical;
+    /* Allow vertical resizing */
+}
+
+/* Reply button styles for adding new replies */
+.reply-item .add-reply-button {
+    background-color: #2196F3;
+    /* Blue background for add button */
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.reply-item .add-reply-button:hover {
+    background-color: #1976D2;
+    /* Darker blue for hover effect */
+}
+
 .modal-textarea {
     width: 100%;
     height: 120px;
@@ -153,9 +229,10 @@
     resize: vertical;
 }
 
-/* Styling for modal buttons */
+/* Modal button styling */
 .modal-button {
-    background-color: blue;
+    background-color: #2196F3;
+    /* Blue background */
     color: #fff;
     border: none;
     padding: 10px 16px;
@@ -165,21 +242,31 @@
     margin-right: 10px;
     transition: background-color 0.3s ease;
 }
-.modal-new{
-    width: 100%;
-        height: 12px;
-        padding: 12px;
-        border: 1px solid #e0e0e0;
-        border-radius: 6px;
-        margin-bottom: 15px;
-        font-size: 1em;
-        line-height: 1.4;
-        resize: vertical;
+
+.modal-button:hover {
+    background-color: #1976D2;
+    /* Darker blue for hover effect */
 }
-.comment1{
+
+/* Styling for new input field */
+.modal-new {
+    width: 100%;
+    height: 12px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 1em;
+    line-height: 1.4;
+    resize: vertical;
+}
+
+/* Comment input field styling */
+.comment1 {
     height: 15vh;
 }
 
+/* Styling for input fields */
 .input {
     width: 90%;
     border: 1px solid #e0e0e0;
@@ -191,32 +278,20 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-top :25px;
-    
+    margin-top: 25px;
 }
 
-/* Outer container for centering */
-.outer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
+/* Styling for input fields within .input */
 .input input {
     padding: 6px;
     border: 1px solid #e0e0e0;
-    /* Uncommented to add border */
     border-radius: 6px;
-    /* Uncommented to add rounded corners */
     margin-bottom: 15px;
     font-size: 1em;
     line-height: 1.4;
     resize: vertical;
-    /* Uncommented to allow vertical resizing */
     box-sizing: border-box;
-    /* Ensures padding and border are included in the total width and height */
     width: 100%;
-    /* Ensures input takes full width of the parent container */
 }
 
 /* Styling for the comment box */
@@ -231,26 +306,48 @@
     margin-bottom: 20px;
 }
 
-/* Comment header */
+/* Comment header styling */
 .comment h3 {
     margin: 0;
     font-size: 1.4em;
     color: #333;
 }
 
-/* Comment text */
+/* Comment text styling */
 .comment p {
     margin: 15px 0;
     color: #666;
     font-size: 1em;
     line-height: 1.6;
 }
+/* Modal Overlay */
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-/* Styling for buttons inside the comment box */
+/* Modal Content */
+.modal {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Button styles inside the comment box */
 .comment button {
     width: 120px;
     height: 40px;
-    background-color: #4caf50;
+    background-color: #2196F3;
+    /* Blue background */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -260,6 +357,10 @@
     margin: 5px;
 }
 
+.comment button:hover {
+    background-color: #1976D2;
+
+}
 
 /* Layout for new comment section */
 .new {
@@ -269,7 +370,7 @@
     margin-top: 10px;
 }
 
-/* Styling for input fields inside new comment section */
+/* Input field styling within new comment section */
 .in {
     width: 100%;
     border: 1px solid #e0e0e0;

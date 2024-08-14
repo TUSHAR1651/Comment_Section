@@ -1,123 +1,107 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
-import Reply from './Reply';
 
-// Set the app element for accessibility
-Modal.setAppElement('#root');
-
-function PostedComment({ commentId, Name, Comment, DateTime, onDelete, onEdit, replies, addReply, deleteReply, editReply }) {
-    const [reply, setReply] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [name, setName] = useState('');
+function PostedComment({
+    commentId,
+    Name,
+    Comment,
+    DateTime,
+    replies,
+    onDelete,
+    onEdit,
+    addReply,
+    deleteReply,
+    editReply
+}) {
+    const [replyName, setReplyName] = useState('');
+    const [replyText, setReplyText] = useState('');
     const [isEditing, setIsEditing] = useState(false);
-    const [editComment, setEditComment] = useState(Comment);
+    const [editedComment, setEditedComment] = useState('');
+    const [editIndex, setEditIndex] = useState(null);
+    const [editedReply, setEditedReply] = useState('');
 
-    function openModal() {
-        setIsModalOpen(true);
-    }
-
-    function closeModal() {
-        setIsModalOpen(false);
-    }
-
-    function postReply() {
-        if (name && reply) {
-            addReply(commentId, name, reply);
-            setReply('');
-            setName('');
-            closeModal();
+    const handleAddReply = () => {
+        if (replyName && replyText) {
+            addReply(replyName, replyText);
+            setReplyName('');
+            setReplyText('');
         }
-    }
+    };
 
-    function handleNameChange(event) {
-        setName(event.target.value);
-    }
-
-    function handleReplyChange(event) {
-        setReply(event.target.value);
-    }
-
-    function handleEditClick() {
-        setIsEditing(true);
-    }
-
-    function handleEditChange(event) {
-        setEditComment(event.target.value);
-    }
-
-    function handleSaveEdit() {
-        onEdit(editComment);
-        setIsEditing(false);
-    }
-
-    function handleCancelEdit() {
-        setEditComment(Comment);
-        setIsEditing(false);
-    }
+    const handleSaveEdit = () => {
+        if (editedComment) {
+            onEdit(editedComment);
+            setIsEditing(false);
+            setEditedComment('');
+        }
+    };
 
     return (
-        <div className="posted-comment-container">
-            <div className="posted-comment-header">
-                <h3 className="posted-comment-author">{Name}</h3>
-                <div>
-                    <p className="posted-comment-date">{DateTime}</p>
-                    <button className="delete-button" onClick={onDelete}>Delete</button>
+        <div className='posted-comment-container'>
+            <div className='posted-comment-header'>
+                <h4 className='posted-comment-author'>{Name}</h4>
+                <div className='date-delete-container'>
+                    <p className='posted-comment-date'>{DateTime}</p>
+                    <button className='delete-button' onClick={onDelete}>Delete</button>
                 </div>
             </div>
             {isEditing ? (
-                <div>
+                <div className='edit-comment-area'>
                     <textarea
-                        value={editComment}
-                        onChange={handleEditChange}
-                        className="edit-textarea"
+                        value={editedComment}
+                        onChange={(e) => setEditedComment(e.target.value)}
                     />
-                    <button onClick={handleSaveEdit} className="modal-button">Save</button>
-                    <button onClick={handleCancelEdit} className="modal-button">Cancel</button>
+                    <button className='modal-button' onClick={handleSaveEdit}>Save</button>
+                    <button className='modal-button' onClick={() => setIsEditing(false)}>Cancel</button>
                 </div>
             ) : (
-                <p className="posted-comment-text">{Comment}</p>
+                <>
+                    <p className='posted-comment-text'>{Comment}</p>
+                    <p className='edit-button' onClick={() => {
+                        setIsEditing(true);
+                        setEditedComment(Comment);
+                    }}>Edit</p>
+                </>
             )}
-            <div className="reply-section">
-                <button onClick={openModal} className="reply-button">Reply</button>
-                <button onClick={handleEditClick} className="edit-button">Edit</button>
-            </div>
-
-            <div className="replies-list">
-                {replies.map((r, index) => (
-                    <Reply
-                        key={index}
-                        name={r.name}
-                        reply={r.reply}
-                        dateTime={r.dateTime}
-                        onDelete={() => deleteReply(commentId, index)}
-                        onEdit={(newReply) => editReply(commentId, index, newReply)}
-                    />
-                ))}
-            </div>
-
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Reply Modal"
-                className="modal"
-                overlayClassName="modal-overlay"
-            >
-                <h2>Reply to {Name}</h2>
-                <textarea
-                    placeholder="Write your name here..."
-                    onChange={handleNameChange}
-                    className="modal-new"
-                    value={name}
+            <div className='reply-section'>
+                <input
+                    type='text'
+                    placeholder='Name'
+                    value={replyName}
+                    onChange={(e) => setReplyName(e.target.value)}
                 />
                 <textarea
-                    placeholder="Write your reply here..."
-                    value={reply}
-                    onChange={handleReplyChange}
-                    className="modal-textarea"
+                    placeholder='Reply'
+                    value={replyText}
+                    onChange={(e) => setReplyText(e.target.value)}
                 />
-                <button onClick={postReply} className="modal-button">Post Reply</button>
-                <button onClick={closeModal} className="modal-button">Cancel</button>
-            </Modal>
+                <button className='reply-button' onClick={handleAddReply}>Reply</button>
+                <div className='replies-list'>
+                    {replies.map((reply, index) => (
+                        <div key={index} className='reply-item'>
+                            <h4>{reply.name}</h4>
+                            <p>{reply.reply}</p>
+                            <button className='delete-button' onClick={() => deleteReply(index)}>Delete Reply</button>
+                            <button className='edit-button' onClick={() => {
+                                setEditIndex(index);
+                                setEditedReply(reply.reply);
+                            }}>Edit Reply</button>
+                            {editIndex === index && (
+                                <div className='reply-edit-area'>
+                                    <textarea
+                                        value={editedReply}
+                                        onChange={(e) => setEditedReply(e.target.value)}
+                                    />
+                                    <button className='modal-button' onClick={() => {
+                                        editReply(index, editedReply);
+                                        setEditIndex(null);
+                                        setEditedReply('');
+                                    }}>Save</button>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }

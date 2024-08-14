@@ -1,52 +1,39 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteReply, editReply } from '../redux/actions/actions';
 
-function Reply({ name, reply, dateTime, onDelete, onEdit }) {
+function Reply({ commentId, reply, replyIndex }) {
+  const [replyText, setReplyText] = useState(reply.reply);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedReply, setEditedReply] = useState(reply);
+  const dispatch = useDispatch();
 
-  function handleEditClick() {
-    setIsEditing(true);
-  }
-
-  function handleCancel() {
-    setIsEditing(false);
-    setEditedReply(reply);
-  }
-
-  function handleSave() {
-    if (editedReply.trim()) { // Ensure that the reply is not empty
-      onEdit(editedReply);
-      setIsEditing(false);
-    } else {
-      // Handle empty reply case (optional: show an error message)
-      alert('Reply cannot be empty');
+  const handleEdit = () => {
+    if (isEditing) {
+      dispatch(editReply(commentId, replyIndex, replyText));
     }
-  }
+    setIsEditing(!isEditing);
+  };
 
-  function handleChange(event) {
-    setEditedReply(event.target.value);
-  }
+  const handleDelete = () => {
+    dispatch(deleteReply(commentId, replyIndex));
+  };
 
   return (
-    <div className="reply-item">
-      <h4>{name}</h4>
-      <p>{dateTime}</p>
+    <div className="reply">
+      <p><strong>{reply.name}</strong> ({reply.dateTime}):</p>
       {isEditing ? (
         <div>
           <textarea
-            value={editedReply}
-            onChange={handleChange}
+            value={replyText}
+            onChange={(e) => setReplyText(e.target.value)}
           />
-          <button onClick={handleSave}>Save</button>
-          <button onClick={handleCancel}>Cancel</button>
+          <button onClick={handleEdit}>Save</button>
         </div>
       ) : (
-        <div>
-          <p>{reply}</p>
-          <button onClick={handleEditClick}>Edit</button>
-          <button onClick={onDelete}>Delete</button>
-        </div>
+        <p>{reply.reply}</p>
       )}
+      <button onClick={handleEdit}>{isEditing ? 'Cancel' : 'Edit'}</button>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 }

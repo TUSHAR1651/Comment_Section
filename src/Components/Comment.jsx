@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addComment, deleteComment, editComment, addReply, deleteReply, editReply } from '../redux/actions/actions';
 import PostedComment from './PostedComment';
 import './Comment.css';
 
-let commentIdCounter = 0;
-
 function Comment() {
-    const [name, setName] = useState('');
-    const [comment, setComment] = useState('');
-    const [comments, setComments] = useState([]);
+    const dispatch = useDispatch();
+    
+    const comments = useSelector(state => state.comments.comments || []);
+    console.log(comments); 
+
+    const [name, setName] = React.useState('');
+    const [comment, setComment] = React.useState('');
 
     function post() {
         if (name && comment) {
             const currentDateTime = new Date().toLocaleString();
-            setComments([
-                ...comments,
-                {
-                    id: commentIdCounter++,  // Generate a unique ID for each comment
-                    name,
-                    comment,
-                    dateTime: currentDateTime,
-                    replies: []
-                }
-            ]);
+            dispatch(addComment({
+                id: Date.now(),  
+                name,
+                comment,
+                dateTime: currentDateTime,
+                replies: []
+            }));
             setName('');
             setComment('');
         }
@@ -31,50 +32,7 @@ function Comment() {
         const sortedComments = [...comments].sort((a, b) =>
             new Date(b.dateTime) - new Date(a.dateTime)
         );
-        setComments(sortedComments);
-    }
-
-    function deleteComment(index) {
-        setComments(comments.filter((_, i) => i !== index));
-    }
-
-    function editComment(index, newComment) {
-        const updatedComments = comments.map((c, i) =>
-            i === index ? { ...c, comment: newComment } : c
-        );
-        setComments(updatedComments);
-    }
-
-    function addReply(commentId, name, reply) {
-        const currentDateTime = new Date().toLocaleString();
-        const updatedComments = comments.map((c) =>
-            c.id === commentId
-                ? { ...c, replies: [...c.replies, { name, reply, dateTime: currentDateTime, commentId }] }
-                : c
-        );
-        setComments(updatedComments);
-    }
-
-    function deleteReply(commentId, replyIndex) {
-        const updatedComments = comments.map((c) =>
-            c.id === commentId
-                ? { ...c, replies: c.replies.filter((_, j) => j !== replyIndex) }
-                : c
-        );
-        setComments(updatedComments);
-    }
-
-    function editReply(commentId, replyIndex, newReply) {
-        const updatedComments = comments.map((c) =>
-            c.id === commentId
-                ? {
-                    ...c, replies: c.replies.map((r, j) =>
-                        j === replyIndex ? { ...r, reply: newReply } : r
-                    )
-                }
-                : c
-        );
-        setComments(updatedComments);
+        dispatch({ type: 'UPDATE_COMMENTS', payload: sortedComments });
     }
 
     return (
@@ -101,7 +59,7 @@ function Comment() {
                     <button onClick={sort}>Sort</button>
                 </div>
                 <div className='posted-comments'>
-                    {comments.map((c, index) => (
+                    {comments.map((c) => (
                         <PostedComment
                             key={c.id}
                             commentId={c.id}
@@ -109,11 +67,11 @@ function Comment() {
                             Comment={c.comment}
                             DateTime={c.dateTime}
                             replies={c.replies}
-                            onDelete={() => deleteComment(index)}
-                            onEdit={(newComment) => editComment(index, newComment)}
-                            addReply={addReply}
-                            deleteReply={(replyIndex) => deleteReply(c.id, replyIndex)}
-                            editReply={(replyIndex, newReply) => editReply(c.id, replyIndex, newReply)}
+                            onDelete={() => dispatch(deleteComment(c.id))}
+                            onEdit={(newComment) => dispatch(editComment(c.id, newComment))}
+                            addReply={(name, reply) => dispatch(addReply(c.id, name, reply))}
+                            deleteReply={(replyIndex) => dispatch(deleteReply(c.id, replyIndex))}
+                            editReply={(replyIndex, newReply) => dispatch(editReply(c.id, replyIndex, newReply))}
                         />
                     ))}
                 </div>
@@ -121,5 +79,4 @@ function Comment() {
         </div>
     );
 }
-
 export default Comment;
