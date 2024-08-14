@@ -96,6 +96,27 @@
     /* background-color: #1976D2; */
     /* Darker blue for hover effect */
 }
+.reply-name{
+    margin: 0;
+    /* font-size: 1em; */
+    /* font-weight: bold; */
+    height: 30px;
+
+    color: #333;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+
+}
+.reply-textarea{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.95em;
+    line-height: 1.4;
+    resize: vertical;
+    /* Allow vertical resizing */
+}
 
 /* Reply section styling */
 .reply-section {

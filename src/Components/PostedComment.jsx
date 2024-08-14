@@ -68,11 +68,13 @@ function PostedComment({
                     placeholder='Name'
                     value={replyName}
                     onChange={(e) => setReplyName(e.target.value)}
+                    className='reply-name'
                 />
                 <textarea
                     placeholder='Reply'
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
+                    className='reply-textarea'
                 />
                 <button className='reply-button' onClick={handleAddReply}>Reply</button>
                 <div className='replies-list'>
